@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { VFXContext } from "./context";
 import VFXPlayer from "./vfx-player";
 
-const canvasStyle = {
+const canvasDefaultStyle = {
     position: "fixed",
     top: 0,
     left: 0,
@@ -17,10 +17,16 @@ export interface VFXProviderProps {
     children?: any; // 😣 https://github.com/DefinitelyTyped/DefinitelyTyped/issues/27805
     pixelRatio?: number;
     zIndex?: number;
+    canvasStyle?: object;
 }
 
 export const VFXProvider: React.FC<VFXProviderProps> = props => {
     const [_player, setPlayer] = useState<VFXPlayer | null>(null);
+
+    const canvasStyle = {
+        ...canvasDefaultStyle,
+        ...props.canvasStyle
+    };
 
     useEffect(() => {
         // Create canvas
